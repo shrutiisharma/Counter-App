@@ -1,34 +1,29 @@
-# <u> Counter App</u>
+# <u> Intents Playground </u>
 
-My Counter Application is a basic application to increment, decrement or count any entity.
+With this application I have learnt various concepts, such as:
 
+- Implementing Activities
 
+- Intents
 
-### Features of the Application:
+- Explicit & Implicit Intent
 
-- We can Increment the counter with   +   button.
-- We can Decrement the counter with   -   button.
+- Sending & Receiving data using Intents
 
+- Constant Keys & Bundle
 
+- Navigation
 
-### Have a run at it with the APK [here](https://github.com/shrutiisharma/Counter-App/releases/download/Version1/app-debug.apk)!
-
-
-
-### Preview of the Application:
-
-#### **Main Menu**
-
-<img src="https://user-images.githubusercontent.com/72591283/118044228-04ae5e00-b394-11eb-9806-3ea4f1308387.png" title="" alt="main" width="243">
+- Increment & Decrement operations of MyCounter app.
 
 
 
-#### **Increment Operation**
-
-<img src="https://user-images.githubusercontent.com/72591283/118044227-04ae5e00-b394-11eb-9c8d-d7c174fc6e2e.png" title="" alt="inc" width="250">
+### Tutorial Videos for the project: [NAAD2.0 - YouTube.](https://www.youtube.com/playlist?list=PLMY-jYOisFilczfqkPVk_5napZFpRk3W0)
 
 
 
-#### **Decrement Operation**
+### Have a run at it with the APK [here](https://github.com/shrutiisharma/Counter-App/releases/download/Version2/app-debug.apk)!
 
-<img title="" src="https://user-images.githubusercontent.com/72591283/118044222-02e49a80-b394-11eb-9e85-9a4e5f0ccc92.png" alt="dec" width="253">
+
+
+### Video of the Application: [Intents Playground.zip](https://github.com/shrutiisharma/Counter-App/files/6485031/Intents.Playground.zip)

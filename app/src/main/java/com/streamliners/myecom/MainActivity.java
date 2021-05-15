@@ -1,15 +1,19 @@
 package com.streamliners.myecom;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ActionMenuView;
+import android.widget.Toast;
+import android.content.SharedPreferences;
+import android.os.PersistableBundle;
 import android.widget.TextView;
 
 import com.streamliners.myecom.databinding.ActivityMainBinding;
 
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,74 +23,42 @@ public class MainActivity extends AppCompatActivity {
     //b is the object of that class
 
     private ActivityMainBinding b;
+    private int minVal, maxVal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        //we then instantiate b by calling static fxn "inflate" of AMB
-        // which creates that layout and
-        // that inflate fxn needs an Inflater (LayoutInflater) to create/inflate the layout.
-
         b = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
-        //method 1: using xml onClick
-
-
-        //method 2: handling event using java
         setupEventHandlers();
+        getInitialCount();
+
     }
 
+    private void getInitialCount() {
 
-/*
+        Bundle bundle = getIntent().getExtras();
 
-    //long method -> make class of OnClickListener [static interface]
-    // then override onClick and then
-    // create its object[as we couldn't create an interface's object directly]
-    // and pass to setOnClickListener
+        if (bundle == null)
+            return;
+        //get data from intent
+        qty = bundle.getInt(Constants.INITIAL_COUNT_KEY, 0);
+        minVal = bundle.getInt(Constants.MIN_Value, Integer.MIN_VALUE);
+        maxVal = bundle.getInt(Constants.MAX_Value, Integer.MAX_VALUE);
 
+        b.qty.setText(String.valueOf(qty));
 
-    class MyClickListener implements View.OnClickListener{
-
-
-        //as it is an interface we have to implement all its methods
-        // and there is only one method i.e onClick
-
-        @Override
-        public void onClick(View v) {
-            incQty();
+        if (qty != 0){
+            b.sendBackBtn.setVisibility(View.VISIBLE);
         }
     }
 
 
-    //use this in setUpEventHandlers()
-    //instead of line 76 and 83
-    //->   b.incBtn.setOnClickListener(new MyClickListener());
-*/
-
-
     private void setupEventHandlers() {
 
-/*
-
-        // short method-> anonymous class
-        // i.e implement interface, override methods & and without having to give the class a name, used it one single time
-
-        b.incBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                incQty();
-            }
-        });
-
-
-*/
-
-
-        //shortest-> lambda method
-        //here we get a view as input and thus we call a function, corresponding to it
+        //lambda method -> here we get a view as input and thus we call a function, corresponding to it
 
         b.decBtn.setOnClickListener(v -> decQty());
 
@@ -95,15 +67,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void decQty() {
-        /*
-        qty--;
-        b.qty.setText("" + qty);
-        */
-
         b.qty.setText("" + --qty);
     }
 
     public void incQty() {
         b.qty.setText("" + ++qty);
+    }
+
+    public void sendBack(View view) {
+
+        //validate count
+        if (qty >= minVal && qty <= maxVal){
+
+            //send the data
+            Intent intent = new Intent();
+            intent.putExtra(Constants.FINAL_COUNT, qty);
+            setResult(RESULT_OK, intent);
+
+            //close the activity
+            finish();
+        }
+
+        //not in range
+        else{
+            Toast.makeText(this, "Not in range!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -6,10 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--Constraint Layout has no nesting so it can be considered best-->
-    <!--to make app multi lingual, we extract string-->
-    <!--weight is used in linear layout to give weight or ratio of space to various layouts-->
-
     <TextView
         android:id="@+id/textView"
         style="@style/TextAppearance.MaterialComponents.Headline5"
@@ -58,6 +54,18 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/qty"
         app:layout_constraintTop_toTopOf="@+id/qty" />
+
+    <Button
+        android:id="@+id/sendBackBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:onClick="sendBack"
+        android:text="Send back"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/qty" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
