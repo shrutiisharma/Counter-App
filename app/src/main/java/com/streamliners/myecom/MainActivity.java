@@ -1,9 +1,12 @@
 package com.streamliners.myecom;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,7 +16,7 @@ import com.streamliners.myecom.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int qty = 0;
+    private int count = 0;
 
     //enabling the viewBinding feature in gradle automatically creates a binding class of all layouts present.
     //b is the object of that class
@@ -31,22 +34,39 @@ public class MainActivity extends AppCompatActivity {
         setupEventHandlers();
         getInitialCount();
 
+
+        //restore instance state
+
+        //get from instance state
+        if (savedInstanceState != null){
+            count = savedInstanceState.getInt(Constants.COUNT, 0);
+        }
+
+        //get from shared preferences
+        else {
+            SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+            count = prefs.getInt(Constants.COUNT, 0);
+        }
+
+        b.countTv.setText(String.valueOf(count));
     }
 
     private void getInitialCount() {
 
+        //get data from intent
         Bundle bundle = getIntent().getExtras();
 
+        //no data received
         if (bundle == null)
             return;
-        //get data from intent
-        qty = bundle.getInt(Constants.INITIAL_COUNT_KEY, 0);
+
+        count = bundle.getInt(Constants.INITIAL_COUNT_KEY, 0);
         minVal = bundle.getInt(Constants.MIN_Value, Integer.MIN_VALUE);
         maxVal = bundle.getInt(Constants.MAX_Value, Integer.MAX_VALUE);
 
-        b.qty.setText(String.valueOf(qty));
+        b.countTv.setText(String.valueOf(count));
 
-        if (qty != 0){
+        if (count != 0){
             b.sendBackBtn.setVisibility(View.VISIBLE);
         }
     }
@@ -63,21 +83,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void decQty() {
-        b.qty.setText("" + --qty);
+        b.countTv.setText("" + --count);
     }
 
     public void incQty() {
-        b.qty.setText("" + ++qty);
+        b.countTv.setText("" + ++count);
     }
 
     public void sendBack(View view) {
 
         //validate count
-        if (qty >= minVal && qty <= maxVal){
+        if (count >= minVal && count <= maxVal){
 
             //send the data
             Intent intent = new Intent();
-            intent.putExtra(Constants.FINAL_COUNT, qty);
+            intent.putExtra(Constants.FINAL_COUNT, count);
             setResult(RESULT_OK, intent);
 
             //close the activity
@@ -89,4 +109,55 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Not in range!", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    //Instance State
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt(Constants.COUNT, count);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        //create preferences reference i.e create object of preferences
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+
+        //save and commit data
+        prefs.edit()
+                .putInt(Constants.COUNT, count)
+                .apply();
+
+
+        //shared preferences changed listener
+        //for strong reference, preferred way is to create listener object as a field in Activity class
+        SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+            }
+        };
+
+        prefs.registerOnSharedPreferenceChangeListener(listener);
+
+    }
+
+
+    /*
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState != null){
+            count = savedInstanceState.getInt(Constants.COUNT, 0);
+            b.countTv.setText(String.valueOf(count));
+        }
+    }
+
+    */
 }
