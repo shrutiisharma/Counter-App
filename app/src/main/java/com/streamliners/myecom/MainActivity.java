@@ -1,16 +1,12 @@
 package com.streamliners.myecom;
 
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
-import android.content.SharedPreferences;
-import android.os.PersistableBundle;
-import android.widget.TextView;
+
 
 import com.streamliners.myecom.databinding.ActivityMainBinding;
 
