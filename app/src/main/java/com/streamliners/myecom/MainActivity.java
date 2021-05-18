@@ -1,15 +1,13 @@
 package com.streamliners.myecom;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.streamliners.myecom.databinding.ActivityMainBinding;
 
@@ -42,12 +40,12 @@ public class MainActivity extends AppCompatActivity {
             count = savedInstanceState.getInt(Constants.COUNT, 0);
         }
 
+        /*
         //get from shared preferences
         else {
             SharedPreferences prefs = getPreferences(MODE_PRIVATE);
             count = prefs.getInt(Constants.COUNT, 0);
-        }
-
+        }*/
         b.countTv.setText(String.valueOf(count));
     }
 

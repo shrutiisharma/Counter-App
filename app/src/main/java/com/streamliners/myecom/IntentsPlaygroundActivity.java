@@ -1,15 +1,16 @@
 package com.streamliners.myecom;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.streamliners.myecom.databinding.ActivityIntentsPlaygroundBinding;
 
@@ -24,13 +25,21 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
 
         setupLayout();
 
-
         setupHideErrorForEditText();
+
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+
+        b.dataEt.setText(prefs.getString(Constants.DATA,""));
+        b.intentTypeRGrp.check(prefs.getInt(Constants.TYPE,-1));
+        b.initialCounterTv.setText(prefs.getString(Constants.INITIAL_COUNT_KEY,""));
     }
 
 
     //Initial Setup---------------------------------------------------------
 
+    /**
+     * To set the layout of the ObjectSenderActivity
+     */
     private void setupLayout() {
         b = ActivityIntentsPlaygroundBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
@@ -38,6 +47,9 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
         setTitle("Intents Playground");
     }
 
+    /**
+     *On changing of the written text in EditText, the error will be hidden
+     */
     private void setupHideErrorForEditText() {
 
         TextWatcher myTextWatcher = new TextWatcher() {
@@ -193,9 +205,30 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
 
     //Utility Functions or Utils---------------------------------------------
 
+    /**
+     * To hide error
+     */
     private void hideError(){
         b.data.setError(null);
     }
 
+
+
+    //Instance State
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        //create preferences reference i.e create object of preferences
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+
+        //save and commit data
+        prefs.edit()
+                .putString(Constants.DATA, b.dataEt.getText().toString().trim())
+                .putInt(Constants.TYPE, b.intentTypeRGrp.getCheckedRadioButtonId())
+                .putString(Constants.INITIAL_COUNT_KEY, b.initialCounterEt.getEditText().getText().toString().trim())
+                .apply();
+    }
 
 }

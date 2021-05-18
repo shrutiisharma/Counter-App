@@ -67,7 +67,7 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/data_et"
+            android:id="@+id/dataEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -148,6 +148,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/initialCounterTv"
             android:inputType="number"
             android:maxLength="3" />
 
