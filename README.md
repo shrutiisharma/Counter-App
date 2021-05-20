@@ -20,7 +20,7 @@ With this application I have learnt various concepts, such as:
 
 - Shared Preferences
 
-- Increment & Decrement operations of MyCounter app.
+- Increment & Decrement operations from MyCounter app.
 
 ### Tutorial Videos for the project: [NAAD2.0 - YouTube.](https://www.youtube.com/playlist?list=PLMY-jYOisFilczfqkPVk_5napZFpRk3W0)
 
